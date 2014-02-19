@@ -16,36 +16,37 @@ Logging out of extension or disabling extension will not lead to removal of HTML
 
 In order to minimize changes necessary to be done to existing pages to enable collaboration tags, each page have to declare a set of collaboration tag options. Each option is represented by META tag in page HEAD. 
 
+'''html
 	<meta name="x-ilink-lookups" content="1"/>
-
+'''
 Enables collaboration tags on the page. If this tag is missing, then collaboration tags will not be presented on the page at all
-
+'''html
 	<meta name="x-ilink-classes" content="person"/>
-
+```
 Space separated list of CSS classes of elements which should be treated as person information. It is preferred that elements containing person information are inline or inline-block. Example:
-  
+'''html  
 	<span class="person" person-id="test@test.com">First Last</span>
-
+'''
 Note. HTML A (anchor) elements are always included as a candidate for possible person information. Example:
-  
+'''html  
 	<a href="mailto:a@b.c">First Last</a>
-
-
+'''
+'''html
 	<meta name="x-ilink-attrs" content="person-id ."/>
-
+'''
 Space separated list of attributes containing person address in page markup. Used in conjunction with x-ilink-classes in order to identify person address. Example:
-
+'''html
   <span class="person" person-id="test@test.com">First Last</span>
-
+'''
 x-ilink-classes="person" and x-ilink-attrs="person-id", the element above will be found and detected as person info. Person address will be taken from person-id attribute.
 A special value of . (dot) in list of attributes is used to define person address lookup inside of person element inner text. Example:
-  
+'''html  
 	<span class="person">test@test.com</span>
-
+'''
 Note. For HTML A (anchor) elements lookup of address is always done in content of href attribute. Only mailto: addresses are detected as person information and corresponding email address is used as person address.
-
+'''html
 	<meta name="x-ilink-mode" content="hoverCard" />
-	
+'''	
 Collaboration tags mode. Space separated list of modes:
 - spotAction - Click on the spot will trigger default person action(depends on extension)
 - spotCard - Click on the spot will trigger display of person card on the page
@@ -58,11 +59,11 @@ Collaboration tags mode. Space separated list of modes:
 Once element is identified as person element, content script will wrap it as shown below.
 
 Original HTML:
-
+'''html
 	<span class="person" person-id="test@test.com">First Last</span>
-
+'''
 Wrapped HTML:
-
+'''html
 	<span class="jsc-wrap" jsc-status="offline">
 	  <span class="jsc-spot"></span>
 	  <span class="jsc-card">
@@ -74,7 +75,7 @@ Wrapped HTML:
 	  </span>
 	  <span class="person jsc-data" person-id="test2@test.com">First Last</span>
 	</span>
-
+'''
 Extension has exclusive control on content of the wrapper - it could change image url, set of labels, set of available actions etc. In order to provide look and feel and some visual effects host page might include additional CSS rules.
 Examples:
 - Show presence image, use:
