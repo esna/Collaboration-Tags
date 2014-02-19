@@ -16,36 +16,41 @@ Logging out of extension or disabling extension will not lead to removal of HTML
 
 In order to minimize changes necessary to be done to existing pages to enable collaboration tags, each page have to declare a set of collaboration tag options. Each option is represented by META tag in page HEAD. 
 
-- <meta name="x-ilink-lookups" content="1"/>
-  Enables collaboration tags on the page. If this tag is missing, then collaboration tags will not be presented on the page at all
+	<meta name="x-ilink-lookups" content="1"/>
 
-- <meta name="x-ilink-classes" content="person"/>
-  Space separated list of CSS classes of elements which should be treated as person information. It is preferred that elements containing person information are inline or inline-block. Example:
+Enables collaboration tags on the page. If this tag is missing, then collaboration tags will not be presented on the page at all
+
+	<meta name="x-ilink-classes" content="person"/>
+
+Space separated list of CSS classes of elements which should be treated as person information. It is preferred that elements containing person information are inline or inline-block. Example:
   
+	<span class="person" person-id="test@test.com">First Last</span>
+
+Note. HTML A (anchor) elements are always included as a candidate for possible person information. Example:
+  
+	<a href="mailto:a@b.c">First Last</a>
+
+
+	<meta name="x-ilink-attrs" content="person-id ."/>
+
+Space separated list of attributes containing person address in page markup. Used in conjunction with x-ilink-classes in order to identify person address. Example:
+
   <span class="person" person-id="test@test.com">First Last</span>
 
-  Note. HTML A (anchor) elements are always included as a candidate for possible person information. Example:
+x-ilink-classes="person" and x-ilink-attrs="person-id", the element above will be found and detected as person info. Person address will be taken from person-id attribute.
+A special value of . (dot) in list of attributes is used to define person address lookup inside of person element inner text. Example:
   
-  <a href="mailto:a@b.c">First Last</a>
+	<span class="person">test@test.com</span>
 
-- <meta name="x-ilink-attrs" content="person-id ."/>
-  Space separated list of attributes containing person address in page markup. Used in conjunction with x-ilink-classes in order to identify person address. Example:
+Note. For HTML A (anchor) elements lookup of address is always done in content of href attribute. Only mailto: addresses are detected as person information and corresponding email address is used as person address.
 
-  <span class="person" person-id="test@test.com">First Last</span>
-
-  x-ilink-classes="person" and x-ilink-attrs="person-id", the element above will be found and detected as person info. Person address will be taken from person-id attribute.
-  A special value of . (dot) in list of attributes is used to define person address lookup inside of person element inner text. Example:
-  
-  <span class="person">test@test.com</span>
-
-  Note. For HTML A (anchor) elements lookup of address is always done in content of href attribute. Only mailto: addresses are detected as person information and corresponding email address is used as person address.
-
-- <meta name="x-ilink-mode" content="hoverCard" />
-  Collaboration tags mode. Space separated list of modes:
-    - spotAction - Click on the spot will trigger default person action(depends on extension)
-    - spotCard - Click on the spot will trigger display of person card on the page
-    - hoverCard - Hover on original element will trigger display of person card on the page
-    - static - all original person elements will be replaced by person cards on the page
+	<meta name="x-ilink-mode" content="hoverCard" />
+	
+Collaboration tags mode. Space separated list of modes:
+- spotAction - Click on the spot will trigger default person action(depends on extension)
+- spotCard - Click on the spot will trigger display of person card on the page
+- hoverCard - Hover on original element will trigger display of person card on the page
+- static - all original person elements will be replaced by person cards on the page
 
 
 ##Wrapper layout
@@ -73,77 +78,78 @@ Wrapped HTML:
 Extension has exclusive control on content of the wrapper - it could change image url, set of labels, set of available actions etc. In order to provide look and feel and some visual effects host page might include additional CSS rules.
 Examples:
 - Show presence image, use:
-
-	  .jsc-wrap[jsc-status='offline'] .jsc-spot
-	  {
-	    background-image: url('offline.png');
-	  }
-	  .jsc-wrap[jsc-status='dnd'] .jsc-spot
-	  {
-	    background-image: url('dnd.png');
-	  }
-	  .jsc-wrap[jsc-status='away'] .jsc-spot
-	  {
-	    background-image: url('away.png');
-	  }
-	  .jsc-wrap[jsc-status='online'] .jsc-spot
-	  {
-	    background-image: url('online.png');
-	  }
-	  
+```css
+  .jsc-wrap[jsc-status='offline'] .jsc-spot
+  {
+    background-image: url('offline.png');
+  }
+  .jsc-wrap[jsc-status='dnd'] .jsc-spot
+  {
+    background-image: url('dnd.png');
+  }
+  .jsc-wrap[jsc-status='away'] .jsc-spot
+  {
+    background-image: url('away.png');
+  }
+  .jsc-wrap[jsc-status='online'] .jsc-spot
+  {
+    background-image: url('online.png');
+  }
+```	  
 - Modify card background, use:
-
-	  .jsc-wrap > .jsc-card
-	  {
-	    background-color: green;
-	  }
-	  
+```css
+  .jsc-wrap > .jsc-card
+  {
+    background-color: green;
+  }
+```	  
 - Modify fonts, use
-
-	  .jsc-wrap > .jsc-card
-	  {
-	    font-family: arial;
-	  }
-	  
+```css
+  .jsc-wrap > .jsc-card
+  {
+    font-family: arial;
+  }
+```	  
 - Hide person image, use:
-
-	  .jsc-wrap > .jsc-card > img
-	  {
-	    display: none;
-	  }
-	  
+```css
+  .jsc-wrap > .jsc-card > img
+  {
+    display: none;
+  }
+```css	  
 - Set action icons and remove action labels, use:
-
-	  .jsc-card > [jsc-action]
-	  {
-	    color: transparent;
-	    background-size: 1em 1em;
-	    background-position: center center;
-	    background-repeat: no-repeat;
-	    border: none;
-	    width: 1em;
-	    min-width: 1em;
-	  }
-	  .jsc-card > [jsc-action]:hover
-	  {
-	    background-color: orange;
-	  }
-	  [jsc-action='open']
-	  {
-	    background-image: url('open.png');
-	  }
-	  [jsc-action='call']
-	  {
-	    background-image: url('call.png');
-	  }
-	  [jsc-action='chat']
-	  {
-	    background-image: url('chat.png');
-	  }
-	  [jsc-action='mail']
-	  {
-	    background-image: url('mail.png');
-	  }
+```css
+  .jsc-card > [jsc-action]
+  {
+    color: transparent;
+    background-size: 1em 1em;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: none;
+    width: 1em;
+    min-width: 1em;
+  }
+  .jsc-card > [jsc-action]:hover
+  {
+    background-color: orange;
+  }
+  [jsc-action='open']
+  {
+    background-image: url('open.png');
+  }
+  [jsc-action='call']
+  {
+    background-image: url('call.png');
+  }
+  [jsc-action='chat']
+  {
+    background-image: url('chat.png');
+  }
+  [jsc-action='mail']
+  {
+    background-image: url('mail.png');
+  }
+```
 
 Notes:
 1. All images used in spot or card should be provided by host page in CSS if necessary. Collaboration tags will provide only person image when available.
