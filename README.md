@@ -1,6 +1,6 @@
-#ESNA COLLABORATION TAGS README
+#ESNA COLLABORATION TAGS
 
-##How It Works
+###How It Works
 
 Collaboration tags are provided by iLink extensions. They are rendered with help of extension’s content script that is loaded to each browser page (including file urls if enabled). Each page where collaboration tags should be rendered should contain a basic declarative markup to help content script in decision of what should be detected as an address and might also have a set of CSS styles to adopt rendered content to host page look and feel.
 Whenever content script finds a tag representing a person or address inside of host page, it will make a request to extension to get person status and set of available actions. Once that information is obtained HTML element containing person information is wrapped into special construct containing:
@@ -12,7 +12,7 @@ Once person element is recognized and bound to extension, it will track person p
 Logging out of extension or disabling extension will not lead to removal of HTML wrappers, but default CSS rules will make additional elements invisible on the page. Visibility of collaboration tags will be restored automatically upon successful login in extension.
 
 
-##Page manifest
+###Page manifest
 
 In order to minimize changes necessary to be done to existing pages to enable collaboration tags, each page have to declare a set of collaboration tag options. Each option is represented by META tag in page HEAD. 
 
@@ -54,7 +54,7 @@ Collaboration tags mode. Space separated list of modes:
 - static - all original person elements will be replaced by person cards on the page
 
 
-##Wrapper layout
+###Wrapper layout
 
 Once element is identified as person element, content script will wrap it as shown below.
 
@@ -117,7 +117,7 @@ Examples:
   {
     display: none;
   }
-```css	  
+```
 - Set action icons and remove action labels, use:
 ```css
   .jsc-card > [jsc-action]
@@ -153,5 +153,6 @@ Examples:
 ```
 
 Notes:
+
 1. All images used in spot or card should be provided by host page in CSS if necessary. Collaboration tags will provide only person image when available.
 2. While you cannot exclude certain info like label or certain action from rendering in manifest, you could use CSS to hide a certain area of the card.
