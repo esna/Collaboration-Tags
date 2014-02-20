@@ -2,6 +2,8 @@
 
 ###How It Works
 
+[See the demonstration video on YouTube](http://youtu.be/W4FS3NMx7eM)
+
 Collaboration tags are provided by iLink extensions. They are rendered with help of extension’s content script that is loaded to each browser page (including file urls if enabled). Each page where collaboration tags should be rendered should contain a basic declarative markup to help content script in decision of what should be detected as an address and might also have a set of CSS styles to adopt rendered content to host page look and feel.
 Whenever content script finds a tag representing a person or address inside of host page, it will make a request to extension to get person status and set of available actions. Once that information is obtained HTML element containing person information is wrapped into special construct containing:
  - Spot. Could be used for default click action or for show card on hover. Also could be used to show person presence information or other type of image
