@@ -29,7 +29,7 @@ Space separated list of CSS classes of elements which should be treated as perso
 ```html  
 	<span class="person" person-id="test@test.com">First Last</span>
 ```
-Note. HTML A (anchor) elements are always included as a candidate for possible person information. Example:
+HTML A (anchor) elements are always included as a candidate for possible person information. Example:
 ```html  
 	<a href="mailto:a@b.c">First Last</a>
 ```
@@ -45,7 +45,29 @@ A special value of . (dot) in list of attributes is used to define person addres
 ```html  
 	<span class="person">test@test.com</span>
 ```
-Note. For HTML A (anchor) elements lookup of address is always done in content of href attribute. Only mailto: addresses are detected as person information and corresponding email address is used as person address.
+```html 
+  <meta name="x-ilink-phone-classes" content="phone">
+```
+Space separated list of CSS classes of elements which should be treated as dial-able phone number information. Example:
+```html 
+  <span class="phone">+19057079700</span>
+```
+```html 
+  <meta name="x-ilink-phone-attrs" content="phone-id .">
+```
+Space separated list of attributes containing phone addresses in page markup. Used in conjunction with x-ilink-phone-classes in order to identify phone addresses. Example:
+```html 
+  <span class="phone" phone-id="+19057079700">Call Esna</span>
+```
+```html 
+  <meta name="x-ilink-phone-anchors" content="1">
+```
+Includes HTML A (anchor) elements, with tel: URI content as a candidate for possible phone number information. Example:
+```html 
+  <a href="tel:+19057079700">First Last</a>
+```
+
+Note. For HTML A (anchor) elements lookup of address is always done in content of href attribute. tel: addresses are recognized as phone number and mailto: addresses are detected as person information and corresponding email address is used as person address.
 ```html
 	<meta name="x-ilink-mode" content="hoverCard" />
 ```	
